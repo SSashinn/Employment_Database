@@ -84,10 +84,10 @@ class Employee:
         self.txtSurname= Entry(LeftFrame1, font=('arial',24,'bold'), bd=5, width=40, justify='left')
         self.txtSurname.grid(row=2, column=1)
 
-        self.lblFirstName = Label(LeftFrame1, font=('arial',24,'bold'),text = 'First Name', bd=7, anchor='w')
-        self.lblFirstName.grid(row=3, column=0, sticky=W)
-        self.txtFirstName = Entry(LeftFrame1, font=('arial',24,'bold'), bd=5, width=40, justify='left')
-        self.txtFirstName.grid(row=3, column=1)
+        self.lblAddress = Label(LeftFrame1, font=('arial',24,'bold'),text = 'Address', bd=7, anchor='w')
+        self.lblAddress.grid(row=3, column=0, sticky=W)
+        self.txtAddress = Entry(LeftFrame1, font=('arial',24,'bold'), bd=5, width=40, justify='left')
+        self.txtAddress.grid(row=3, column=1)
 
         self.lblGender = Label(LeftFrame1, font=('arial',24,'bold'),text = 'Gender', bd=7, anchor='w')
         self.lblGender.grid(row=4, column=0, sticky=W)
@@ -131,10 +131,10 @@ class Employee:
         self.txtPension= Entry(LeftFrame2right, font=('arial',24,'bold'), bd=5, width=12, justify='left')
         self.txtPension.grid(row=1, column=1) 
 
-        self.lblstdLoad = Label(LeftFrame2right, font=('arial',24,'bold'),text = 'student Loan', bd=7, anchor='w')
-        self.lblstdLoad.grid(row=2, column=0, sticky=W)
-        self.txtstdLoad= Entry(LeftFrame2right, font=('arial',24,'bold'), bd=5, width=12, justify='left')
-        self.txtstdLoad.grid(row=2, column=1) 
+        self.lblstdLoan = Label(LeftFrame2right, font=('arial',24,'bold'),text = 'student Loan', bd=7, anchor='w')
+        self.lblstdLoan.grid(row=2, column=0, sticky=W)
+        self.txtstdLoan= Entry(LeftFrame2right, font=('arial',24,'bold'), bd=5, width=12, justify='left')
+        self.txtstdLoan.grid(row=2, column=1) 
 
         self.lblNIPayment= Label(LeftFrame2right, font=('arial',24,'bold'),text = 'NI   Payment', bd=7, anchor='w')
         self.lblNIPayment.grid(row=3, column=0, sticky=W)
@@ -179,7 +179,7 @@ class Employee:
 
         self.lblNetPay = Label(RightFrame2d, font=('arial',24,'bold'),text = 'Net Pay', bd=5, anchor='w')
         self.lblNetPay.grid(row=0, column=0, sticky=W)
-        self.txtNetPay= Entry(RightFrame2d, font=('arial',24,'bold'), bd=5, width=12, justify='left')
+        self.txtNetPay= Entry(RightFrame2d, font=('arial',24,'bold'), bd=5, width=17, justify='left')
         self.txtNetPay.grid(row=0, column=1) 
 
         self.lblGrossPay = Label(RightFrame2d, font=('arial',24,'bold'),text = 'Gross Pay', bd=5, anchor='w')
@@ -193,8 +193,69 @@ class Employee:
         self.txtDeductions.grid(row=2, column=1)   
 
         #---------------------------------Widget TreeView----------------------- 
-        #---------------------------------Widget Label/Entry----------------------- 
+        style = ttk.Style()
+        style.configure('Treeview.Heading', font=('TKDefaultFont',18))
+        style.configure('Treeview',rowheight =40, font=('TKDefaultFont',18))
 
+        treeview_columns = ('Reference','Firstname','Surname','Address','Gender','Mobile','NI Number','Student Loan',
+                            'Tax','Pension','Deductions','Net Pay','Gross Pay')
+        
+        treeview = ttk.Treeview(TopFrame3, column= treeview_columns, show='headings',height=7)
+        treeview.pack()
+
+        #set up the treeview Columns
+        for col in treeview_columns:
+            treeview.heading(col, text=col)
+            treeview.column(col, width=145)
+            treeview.column(col, anchor='center')
+
+        #Load data from excel onto the Treeview
+
+        try:
+            df = pd.read_excel('Emp.xlsx')
+            for index, row in df.iterrows():
+                treeview.insert('','end', values= (row['Reference'], row['Firstname'], row['Surname'], row['Address']
+                                                    , row['Gender'], row['Mobile'], row['NI Number']
+                                                    , row['Student loan'], row['Tax'], row['Pension']
+                                                    , row['Deductions'], row['Net Pay'], row['Gross Pay']
+                                                    ))
+        except Exception as  e:
+            tkinter.messagebox.showerror('Error',str(e))
+        #---------------------------------Widget Label/Entry----------------------- 
+        # Function to handle the Treeview row selection event
+        def on_treeview_select(event):
+            selcted_item = treeview.focus()
+            if selcted_item:
+                values = treeview.item(selcted_item, 'values')
+                self.txtRefernce.delete(0,END)
+                self.txtFirstName.delete(0,END)
+                self.txtSurname.delete(0,END)
+                self.txtAddress.delete(0,END)
+                self.txtGender.delete(0,END)
+                self.txtMobile.delete(0,END)
+                self.txtNINumber.delete(0,END)
+                self.txtstdLoan.delete(0,END)
+                self.txtTax.delete(0,END)
+                self.txtPension.delete(0,END)
+                self.txtDeductions.delete(0,END)
+                self.txtNetPay.delete(0,END)
+                self.txtGrossPay.delete(0,END)  
+
+                self.txtRefernce.insert(0, values[0])
+                self.txtFirstName.insert(0, values[1])
+                self.txtSurname.insert(0, values[2])
+                self.txtAddress.insert(0, values[3])
+                self.txtGender.insert(0, values[4])
+                self.txtMobile.insert(0, values[5])
+                self.txtNINumber.insert(0, values[6])
+                self.txtstdLoan.insert(0, values[7])
+                self.txtTax.insert(0, values[8])
+                self.txtPension.insert(0, values[9])
+                self.txtDeductions.insert(0, values[10])
+                self.txtNetPay.insert(0, values[11])
+                self.txtGrossPay.insert(0, values[12])
+
+        treeview.bind('<<TreeviewSelect>>',on_treeview_select)
         #---------------------------------Widget Buttons----------------------- 
         self.btnAddNewTotal = Button(TopFrame1,pady=1,bd=4,fg="black", font=('arial',20,'bold'), padx=1,
                                 width = 15,text ="AddNew/Total").grid(row=0,column=0)
