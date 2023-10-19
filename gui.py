@@ -96,6 +96,165 @@ class Employee:
         OtherPaymentDue.set("0.00")
         OverTime.set("0.00")
 
+        # -------------------------------Functions--------------------------
+        # This function will delete data from excel
+        def deleteData(Reference):
+            # delete data from excel
+            try:
+                df = pd.read_excel("Emp.xlsx")
+                df.drop(df[df['Reference'] == Reference].index, inplace=True)
+                df.to_excel("Emp.xlsx", index=False)
+                tkinter.messagebox.showinfo("Success", "Record deleted successfully.")
+            except Exception as  e:
+                tkinter.messagebox.showerror('Error',str(e))
+
+            # Delete data From Treeview
+            selected_item = treeview.selection()
+            if selected_item:
+                item_text = treeview.item(selected_item, "values")[0]
+                df.drop(df[df['Reference'] == item_text].index, inplace=True)
+                treeview.delete(selected_item)
+
+
+        def reset():
+            cityWeighting.set("0.00")
+            basicSalary.set("0.00")
+            OtherPaymentDue.set("0.00")
+            OverTime.set("0.00")        
+
+            Refernce.set("")
+            FirstName.set("")
+            Surname.set("")
+            Address.set("")
+            Gender.set("")
+            Mobile.set("")
+            GrossPay.set("")
+            NetPay.set("")
+            Tax.set("")
+            Pension.set("")
+            stdLoan.set("")
+            NIpayment.set("")
+            Deductions.set("")
+            Payday.set("")
+            TaxPeriod.set("")
+            NINumber.set("")
+            NICode.set("")
+            TaxablePay.set("")
+            PensionablePay.set("")
+            TaxCode.set("")
+            self.txtReciept.delete("1.0",END)
+
+
+        def quit():
+            quit = tkinter.messagebox.askyesno("Employee Database Management System", "Confirm if you want to quit")
+            if quit>0:
+                root.destroy()
+                return
+            
+
+        def payReference():
+            Payday.set(time.strftime("%d/%m/%y"))
+            refPay = random.randint(14572, 700532)
+            Refernce.set(str(refPay))
+
+            NIpay = random.randint(31201, 400573)
+            NINumber.set("NI"+str(NIpay))
+
+            idate = datetime.datetime.now()
+            TaxPeriod.set(idate.month)
+
+            nCode = random.randint(1101, 12573)
+            NICode.set("NIC"+str(nCode))
+
+            itaxCode = random.randint(7472, 14773)
+            TaxCode.set("TCode"+str(itaxCode))
+            monthlySalary()
+
+
+        def monthlySalary():
+            CW = float(cityWeighting.get())
+            BS = float(basicSalary.get())
+            OT = float(OverTime.get())
+            PD = float(OtherPaymentDue.get())
+
+            MTax = str('$%.2f'%((BS + CW + OT + PD)* 0.3))
+            Tax.set(MTax)
+
+            MPension = str('$%.2f'%((BS + CW + OT + PD)* 0.2))
+            Pension.set(MPension)
+
+            MStdLoan = str('$%.2f'%((BS + CW + OT + PD)* 0.022))
+            stdLoan.set(MStdLoan)
+
+            MNIPayment = str('$%.2f'%((BS + CW + OT + PD)* 0.011))
+            NIpayment.set(MNIPayment)
+
+            sum = BS + CW + OT + PD
+            MDeduct = (sum*0.3)+(sum*0.2)+(sum*0.022)+(sum*0.011)
+            Deductions.set(str('$%.2f'%(MDeduct)))
+
+            GrossPay.set(str('$%.2f'%(sum)))
+            NetPay.set(str('$%.2f'%(sum-MDeduct)))
+            TaxablePay.set(MTax)
+            PensionablePay.set(MPension)
+            # display()
+
+
+        def display():
+            self.txtReciept.delete("1.0",END)
+            self.txtReciept.insert(END, '\t Monthly Play Slip\n\n','center')
+            self.txtReciept.insert(END, 'Reference\t\t\t'+ Refernce.get()+'\n')
+            self.txtReciept.insert(END, 'Payday\t\t\t'+ Payday.get()+'\n')
+            self.txtReciept.insert(END, 'Firstname\t\t\t'+ FirstName.get()+'\n')
+            self.txtReciept.insert(END, 'surname\t\t\t'+ Surname.get()+'\n')
+            self.txtReciept.insert(END, 'Tax\t\t\t'+ Tax.get()+'\n')
+            self.txtReciept.insert(END, 'Pension\t\t\t'+ Pension.get()+'\n')
+            self.txtReciept.insert(END, 'Student Loan\t\t\t'+ stdLoan.get()+'\n')
+            self.txtReciept.insert(END, 'NI Number\t\t\t'+ NINumber.get()+'\n')
+            self.txtReciept.insert(END, 'NI Payment\t\t\t'+ NIpayment.get()+'\n')
+            self.txtReciept.insert(END, 'Deductuions\t\t\t'+ Deductions.get()+'\n')
+            self.txtReciept.insert(END, 'City Weighting\t\t\t$'+ str('$ %.2f'%(cityWeighting.get()))+'\n')
+
+            self.txtReciept.insert(END, '\nTax Paid\t\t\t'+ str('$ %.2f'%(basicSalary.get()))+'\n')
+            self.txtReciept.insert(END, 'OverTime\t\t\t$'+ OverTime.get()+'\n')
+            self.txtReciept.insert(END, 'NetPay\t\t\t'+ NetPay.get()+'\n')
+            self.txtReciept.insert(END, 'GrossPay\t\t\t'+ GrossPay.get()+'\n')
+
+
+        def iprint():
+            q = self.txtReciept.get("1.0","end-1c")
+            filename = tempfile.mktemp(".doc")
+            open(filename, "w").write(q)
+            os.startfile(filename,"print")
+
+
+        def addData():
+            try:
+                df = pd.read_excel('Emp.xlsx')
+                Reference = self.txtRefernce.get()
+                new_data = {
+                    'Reference':[Reference], 
+                    'Firstname': [self.txtFirstName.get()],
+                    'Surname':[self.txtSurname.get()],
+                    'Address':[self.txtAddress.get()],
+                    'Gender':[self.txtGender.get()], 
+                    'Mobile':[self.txtMobile.get()],
+                    'NI Number':[self.txtNINumber.get()],
+                    'Student loan':[self.txtstdLoan.get()],
+                    'Tax':[self.txtTax.get()],
+                    'Pension':[self.txtPension.get()],
+                    'Deductions':[self.txtDeductions.get()],
+                    'Net Pay':[self.txtNetPay.get()],
+                    'Gross Pay':[self.txtGrossPay.get()]
+                }
+                new_df = pd.DataFrame(new_data)
+                df = pd.concat([df, new_df], ignore_index=True)
+                df.to_excel("Emp.xlsx", index = False)
+                tkinter.messagebox.showinfo('Succesfull','Data updated successfully.')           
+
+            except Exception as  e:
+                tkinter.messagebox.showerror('Error',str(e))           
+
         # -------------------------------Text Buttons--------------------------
         self.txtReciept = Text(RightFrame1a, height=22, width=34, bd=10, font=('arial',16,'bold'))
         self.txtReciept.grid(row=0, column=0)
@@ -181,7 +340,7 @@ class Employee:
                                textvariable= stdLoan)
         self.txtstdLoan.grid(row=2, column=1) 
 
-        self.lblNIPayment= Label(LeftFrame2right, font=('arial',24,'bold'),text = 'NI   Payment', bd=7, anchor='w')
+        self.lblNIPayment= Label(LeftFrame2right, font=('arial',24,'bold'),text = 'NI Payment', bd=7, anchor='w')
         self.lblNIPayment.grid(row=3, column=0, sticky=W)
         self.txtNIPayment= Entry(LeftFrame2right, font=('arial',24,'bold'), bd=5, width=12, justify='left',
                                  textvariable= NIpayment)
@@ -314,25 +473,26 @@ class Employee:
         treeview.bind('<<TreeviewSelect>>',on_treeview_select)
         #---------------------------------Widget Buttons----------------------- 
         self.btnAddNewTotal = Button(TopFrame1,pady=1,bd=4,fg="black", font=('arial',20,'bold'), padx=1,
-                                width = 15,text ="AddNew/Total").grid(row=0,column=0)
+                                width = 15,text ="Add Total", command=payReference).grid(row=0,column=0)
         
         self.btnPrint = Button(TopFrame1,pady=1,bd=4,fg="black", font=('arial',20,'bold'), padx=1,
-                            width = 15,text ="Print").grid(row=0,column=1)        
+                            width = 15,text ="Print", command=iprint).grid(row=0,column=1)        
         
         self.btnDisplay = Button(TopFrame1,pady=1,bd=4,fg="black", font=('arial',20,'bold'), padx=1,
-                                width = 15,text ="Display").grid(row=0,column=2)
+                                width = 15,text ="Display", command=display).grid(row=0,column=2)
 
         self.btnUpdate = Button(TopFrame1,pady=1,bd=4,fg="black", font=('arial',20,'bold'), padx=1,
-                                 width = 15,text ="Update").grid(row=0,column=3)
+                                 width = 15,text ="Update", command=addData).grid(row=0,column=3)
 
         self.btnDelete = Button(TopFrame1,pady=1,bd=4,fg="black", font=('arial',20,'bold'), padx=1,
-                                width = 15,text ="Delete").grid(row=0,column=4)
+                                width = 15,text ="Delete", command=lambda: deleteData(treeview.item(treeview.selection())
+                                ["values"][0])).grid(row=0,column=4)
         
         self.btnReset = Button(TopFrame1,pady=1,bd=4,fg="black", font=('arial',20,'bold'), padx=1,
-                            width = 15,text ="Reset").grid(row=0,column=5)        
+                            width = 15,text ="Reset", command=reset).grid(row=0,column=5)        
         
         self.btnExit = Button(TopFrame1,pady=1,bd=4,fg="black", font=('arial',20,'bold'), padx=1,
-                                width = 15,text ="Exit").grid(row=0,column=6)
+                                width = 15,text ="Exit", command=quit).grid(row=0,column=6)
 
 
 if __name__ == '__main__':
