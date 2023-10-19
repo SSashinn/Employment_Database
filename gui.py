@@ -15,7 +15,7 @@ class Employee:
         self.root.geometry("1920x1000+0+0")
         self.root.configure(bg = 'gainsboro')
 
-        MainFrame = Frame(self.root, bd=10, width=1920, height=9000, relief=RIDGE)
+        MainFrame = Frame(self.root, bd=10, width=1920, height=900, relief=RIDGE)
         MainFrame.grid()
         
         TopFrame1 = Frame(MainFrame, bd=7, width=1910, height=50, relief=RIDGE)
@@ -43,26 +43,158 @@ class Employee:
         LeftFrame2right.pack(side=RIGHT)  
 
 
-        RightFrame1 = Frame(TopFrame2,bd=5, width=320, height=400,padx=0, bg='gainsboro', relief=RIDGE)
+        RightFrame1 = Frame(TopFrame2,bd=5, width=320, height=400,padx=0, relief=RIDGE)
         RightFrame1.pack(side=RIGHT) 
 
-        RightFrame1a = Frame(RightFrame1, bd=5, width=310, height=300, padx=0, bg='gainsboro', relief=RIDGE)
+        RightFrame1a = Frame(RightFrame1, bd=5, width=310, height=300, padx=0, relief=RIDGE)
         RightFrame1a.pack(side=TOP) 
 
-        RightFrame2 = Frame(TopFrame2, bd=5, width=300, height=400, padx=0, bg='gainsboro', relief=RIDGE)
+        RightFrame2 = Frame(TopFrame2, bd=5, width=300, height=400, padx=0,relief=RIDGE)
         RightFrame2.pack(side=RIGHT)  
 
-        RightFrame2a = Frame(RightFrame2,bd=5, width=280, height=50, padx=0, bg='gainsboro', relief=RIDGE)
+        RightFrame2a = Frame(RightFrame2,bd=5, width=280, height=50, padx=0, relief=RIDGE)
         RightFrame2a.pack(side=TOP) 
 
-        RightFrame2b = Frame(RightFrame2,bd=5, width=280, height=180, padx=0, bg='gainsboro', relief=RIDGE)
+        RightFrame2b = Frame(RightFrame2,bd=5, width=280, height=180, padx=0, relief=RIDGE)
         RightFrame2b.pack(side=TOP) 
 
-        RightFrame2c = Frame(RightFrame2,bd=5, width=280, height=100, padx=0, bg='gainsboro', relief=RIDGE)
+        RightFrame2c = Frame(RightFrame2,bd=5, width=280, height=100, padx=0, relief=RIDGE)
         RightFrame2c.pack(side=TOP) 
 
-        RightFrame2d = Frame(RightFrame2,bd=5, width=280, height=50, padx=0, bg='gainsboro', relief=RIDGE)
+        RightFrame2d = Frame(RightFrame2,bd=5, width=280, height=50, padx=0, relief=RIDGE)
         RightFrame2d.pack(side=TOP) 
+
+        # -------------------------------Text Buttons--------------------------
+        self.txtReciept = Text(RightFrame1a, height=22, width=34, bd=10, font=('arial',16,'bold'))
+        self.txtReciept.grid(row=0, column=0)
+
+        # -------------------------------Widget Label/Entry--------------------------
+        self.lblReference = Label(LeftFrame1, font=('arial',24,'bold'),text = 'Reference', bd=7, anchor='w')
+        self.lblReference.grid(row=0, column=0, sticky=W)
+        self.txtRefernce = Entry(LeftFrame1, font=('arial',24,'bold'), bd=5, width=40, justify='left')
+        self.txtRefernce.grid(row=0, column=1)
+
+        self.lblFirstName = Label(LeftFrame1, font=('arial',24,'bold'),text = 'First Name', bd=7, anchor='w')
+        self.lblFirstName.grid(row=1, column=0, sticky=W)
+        self.txtFirstName = Entry(LeftFrame1, font=('arial',24,'bold'), bd=5, width=40, justify='left')
+        self.txtFirstName.grid(row=1, column=1)
+
+        self.lblSurname = Label(LeftFrame1, font=('arial',24,'bold'),text = 'Surname', bd=7, anchor='w')
+        self.lblSurname.grid(row=2, column=0, sticky=W)
+        self.txtSurname= Entry(LeftFrame1, font=('arial',24,'bold'), bd=5, width=40, justify='left')
+        self.txtSurname.grid(row=2, column=1)
+
+        self.lblFirstName = Label(LeftFrame1, font=('arial',24,'bold'),text = 'First Name', bd=7, anchor='w')
+        self.lblFirstName.grid(row=3, column=0, sticky=W)
+        self.txtFirstName = Entry(LeftFrame1, font=('arial',24,'bold'), bd=5, width=40, justify='left')
+        self.txtFirstName.grid(row=3, column=1)
+
+        self.lblGender = Label(LeftFrame1, font=('arial',24,'bold'),text = 'Gender', bd=7, anchor='w')
+        self.lblGender.grid(row=4, column=0, sticky=W)
+        self.txtGender= Entry(LeftFrame1, font=('arial',24,'bold'), bd=5, width=40, justify='left')
+        self.txtGender.grid(row=4, column=1)
+
+        self.lblMobile = Label(LeftFrame1, font=('arial',24,'bold'),text = 'Mobile', bd=7, anchor='w')
+        self.lblMobile.grid(row=5, column=0, sticky=W)
+        self.txtMobile= Entry(LeftFrame1, font=('arial',24,'bold'), bd=5, width=40, justify='left')
+        self.txtMobile.grid(row=5, column=1)
+
+        #---------------------------------Widget Label/Entry----------------------- 
+        self.lblCityWeighting = Label(LeftFrame2left, font=('arial',24,'bold'),text = 'City Weighting', bd=7, anchor='w')
+        self.lblCityWeighting.grid(row=0, column=0, sticky=W)
+        self.txtCityWeighting= Entry(LeftFrame2left, font=('arial',24,'bold'), bd=5, width=10, justify='left')
+        self.txtCityWeighting.grid(row=0, column=1)      
+
+        self.lblBasicSalary = Label(LeftFrame2left, font=('arial',24,'bold'),text = 'Basic Salary', bd=7, anchor='w')
+        self.lblBasicSalary.grid(row=1, column=0, sticky=W)
+        self.txtBasicSalary= Entry(LeftFrame2left, font=('arial',24,'bold'), bd=5, width=10, justify='left')
+        self.txtBasicSalary.grid(row=1, column=1) 
+
+        self.lblOverTime = Label(LeftFrame2left, font=('arial',24,'bold'),text = 'Over Time', bd=7, anchor='w')
+        self.lblOverTime.grid(row=2, column=0, sticky=W)
+        self.txtOverTime= Entry(LeftFrame2left, font=('arial',24,'bold'), bd=5, width=10, justify='left')
+        self.txtOverTime.grid(row=2, column=1) 
+
+        self.lblOtherPaymentDue= Label(LeftFrame2left, font=('arial',24,'bold'),text = 'Other Payment', bd=7, anchor='w')
+        self.lblOtherPaymentDue.grid(row=3, column=0, sticky=W)
+        self.txtOtherPaymentDue= Entry(LeftFrame2left, font=('arial',24,'bold'), bd=5, width=10, justify='left')
+        self.txtOtherPaymentDue.grid(row=3, column=1) 
+
+        #---------------------------------Widget Label/Entry----------------------- 
+        self.lblTax = Label(LeftFrame2right, font=('arial',24,'bold'),text = 'Tax', bd=7, anchor='w')
+        self.lblTax.grid(row=0, column=0, sticky=W)
+        self.txtTax= Entry(LeftFrame2right, font=('arial',24,'bold'), bd=5, width=12, justify='left')
+        self.txtTax.grid(row=0, column=1)      
+
+        self.lblPension = Label(LeftFrame2right, font=('arial',24,'bold'),text = 'Pension', bd=7, anchor='w')
+        self.lblPension.grid(row=1, column=0, sticky=W)
+        self.txtPension= Entry(LeftFrame2right, font=('arial',24,'bold'), bd=5, width=12, justify='left')
+        self.txtPension.grid(row=1, column=1) 
+
+        self.lblstdLoad = Label(LeftFrame2right, font=('arial',24,'bold'),text = 'student Loan', bd=7, anchor='w')
+        self.lblstdLoad.grid(row=2, column=0, sticky=W)
+        self.txtstdLoad= Entry(LeftFrame2right, font=('arial',24,'bold'), bd=5, width=12, justify='left')
+        self.txtstdLoad.grid(row=2, column=1) 
+
+        self.lblNIPayment= Label(LeftFrame2right, font=('arial',24,'bold'),text = 'NI   Payment', bd=7, anchor='w')
+        self.lblNIPayment.grid(row=3, column=0, sticky=W)
+        self.txtNIPayment= Entry(LeftFrame2right, font=('arial',24,'bold'), bd=5, width=12, justify='left')
+        self.txtNIPayment.grid(row=3, column=1) 
+
+        #---------------------------------Widget Label/Entry----------------------- 
+        self.lblPayday = Label(RightFrame2a, font=('arial',24,'bold'),text = 'Payday', bd=5, anchor='w')
+        self.lblPayday.grid(row=0, column=0, sticky=W)
+        self.txtPayday= Entry(RightFrame2a, font=('arial',24,'bold'), bd=5, width=20, justify='left')
+        self.txtPayday.grid(row=0, column=1) 
+
+        self.lblTaxPeriod = Label(RightFrame2b, font=('arial',24,'bold'),text = 'Tax Period', bd=5, anchor='w')
+        self.lblTaxPeriod.grid(row=0, column=0, sticky=W)
+        self.txtTaxPeriod= Entry(RightFrame2b, font=('arial',24,'bold'), bd=5, width=17, justify='left')
+        self.txtTaxPeriod.grid(row=0, column=1)
+
+        self.lblTaxCode = Label(RightFrame2b, font=('arial',24,'bold'),text = 'TaxCode', bd=5, anchor='w')
+        self.lblTaxCode.grid(row=1, column=0, sticky=W)
+        self.txtTaxCode= Entry(RightFrame2b, font=('arial',24,'bold'), bd=5, width=17, justify='left')
+        self.txtTaxCode.grid(row=1, column=1)
+
+        self.lblNINumber = Label(RightFrame2b, font=('arial',24,'bold'),text = 'NI Number', bd=5, anchor='w')
+        self.lblNINumber.grid(row=2, column=0, sticky=W)
+        self.txtNINumber= Entry(RightFrame2b, font=('arial',24,'bold'), bd=5, width=17, justify='left')
+        self.txtNINumber.grid(row=2, column=1)
+
+        self.lblNICode = Label(RightFrame2b, font=('arial',24,'bold'),text = 'NI Code', bd=5, anchor='w')
+        self.lblNICode.grid(row=3, column=0, sticky=W)
+        self.txtNICode= Entry(RightFrame2b, font=('arial',24,'bold'), bd=5, width=17, justify='left')
+        self.txtNICode.grid(row=3, column=1)
+
+        self.lblTaxablePay = Label(RightFrame2c, font=('arial',24,'bold'),text = 'Taxable Pay', bd=5, anchor='w')
+        self.lblTaxablePay.grid(row=0, column=0, sticky=W)
+        self.txtTaxablePay= Entry(RightFrame2c, font=('arial',24,'bold'), bd=5, width=12, justify='left')
+        self.txtTaxablePay.grid(row=0, column=1)
+
+        self.lblPensionablePay = Label(RightFrame2c, font=('arial',24,'bold'),text = 'Pensionable Pay', bd=5, anchor='w')
+        self.lblPensionablePay.grid(row=1, column=0, sticky=W)
+        self.txtPensionablePay= Entry(RightFrame2c, font=('arial',24,'bold'), bd=5, width=12, justify='left')
+        self.txtPensionablePay.grid(row=1, column=1) 
+
+        self.lblNetPay = Label(RightFrame2d, font=('arial',24,'bold'),text = 'Net Pay', bd=5, anchor='w')
+        self.lblNetPay.grid(row=0, column=0, sticky=W)
+        self.txtNetPay= Entry(RightFrame2d, font=('arial',24,'bold'), bd=5, width=12, justify='left')
+        self.txtNetPay.grid(row=0, column=1) 
+
+        self.lblGrossPay = Label(RightFrame2d, font=('arial',24,'bold'),text = 'Gross Pay', bd=5, anchor='w')
+        self.lblGrossPay.grid(row=1, column=0, sticky=W)
+        self.txtGrossPay= Entry(RightFrame2d, font=('arial',24,'bold'), bd=5, width=17, justify='left')
+        self.txtGrossPay.grid(row=1, column=1)    
+        
+        self.lblDeductions = Label(RightFrame2d, font=('arial',24,'bold'),text = 'Deductions', bd=5, anchor='w')
+        self.lblDeductions.grid(row=2, column=0, sticky=W)
+        self.txtDeductions= Entry(RightFrame2d, font=('arial',24,'bold'), bd=5, width=17, justify='left')
+        self.txtDeductions.grid(row=2, column=1)   
+
+        #---------------------------------Widget TreeView----------------------- 
+        #---------------------------------Widget Label/Entry----------------------- 
+
         #---------------------------------Widget Buttons----------------------- 
         self.btnAddNewTotal = Button(TopFrame1,pady=1,bd=4,fg="black", font=('arial',20,'bold'), padx=1,
                                 width = 15,text ="AddNew/Total").grid(row=0,column=0)
