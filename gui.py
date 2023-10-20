@@ -100,20 +100,22 @@ class Employee:
         # This function will delete data from excel
         def deleteData(Reference):
             # delete data from excel
-            try:
-                df = pd.read_excel("Emp.xlsx")
-                df.drop(df[df['Reference'] == Reference].index, inplace=True)
-                df.to_excel("Emp.xlsx", index=False)
-                tkinter.messagebox.showinfo("Success", "Record deleted successfully.")
-            except Exception as  e:
-                tkinter.messagebox.showerror('Error',str(e))
+            delPopup = tkinter.messagebox.askyesno("Delete","Confirm if you want to delete the data")
+            if delPopup>0:
+                try:
+                    df = pd.read_excel("Emp.xlsx")
+                    df.drop(df[df['Reference'] == Reference].index, inplace=True)
+                    df.to_excel("Emp.xlsx", index=False)
+                    tkinter.messagebox.showinfo("Success", "Record deleted successfully.")
+                except Exception as  e:
+                    tkinter.messagebox.showerror('Error',str(e))
 
-            # Delete data From Treeview
-            selected_item = treeview.selection()
-            if selected_item:
-                item_text = treeview.item(selected_item, "values")[0]
-                df.drop(df[df['Reference'] == item_text].index, inplace=True)
-                treeview.delete(selected_item)
+                # Delete data From Treeview
+                selected_item = treeview.selection()
+                if selected_item:
+                    item_text = treeview.item(selected_item, "values")[0]
+                    df.drop(df[df['Reference'] == item_text].index, inplace=True)
+                    treeview.delete(selected_item)
 
 
         def reset():
