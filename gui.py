@@ -13,7 +13,7 @@ class Employee:
         self.root = root
         self.root.title("Employee Database Management System")
         self.root.geometry("1920x1000+0+0")
-        self.root.configure(bg = 'gainsboro')
+        self.root.configure(bg = 'gainsboro') #To Change properties after initiazlization.
 
         MainFrame = Frame(self.root, bd=10, width=1920, height=900, relief=RIDGE)
         MainFrame.grid()
@@ -179,24 +179,24 @@ class Employee:
             OT = float(OverTime.get())
             PD = float(OtherPaymentDue.get())
 
-            MTax = str('$%.2f'%((BS + CW + OT + PD)* 0.3))
+            MTax = str('£%.2f'%((BS + CW + OT + PD)* 0.3))
             Tax.set(MTax)
 
-            MPension = str('$%.2f'%((BS + CW + OT + PD)* 0.2))
+            MPension = str('£%.2f'%((BS + CW + OT + PD)* 0.2))
             Pension.set(MPension)
 
-            MStdLoan = str('$%.2f'%((BS + CW + OT + PD)* 0.022))
+            MStdLoan = str('£%.2f'%((BS + CW + OT + PD)* 0.022))
             stdLoan.set(MStdLoan)
 
-            MNIPayment = str('$%.2f'%((BS + CW + OT + PD)* 0.011))
+            MNIPayment = str('£%.2f'%((BS + CW + OT + PD)* 0.011))
             NIpayment.set(MNIPayment)
 
             sum = BS + CW + OT + PD
             MDeduct = (sum*0.3)+(sum*0.2)+(sum*0.022)+(sum*0.011)
-            Deductions.set(str('$%.2f'%(MDeduct)))
+            Deductions.set(str('£%.2f'%(MDeduct)))
 
-            GrossPay.set(str('$%.2f'%(sum)))
-            NetPay.set(str('$%.2f'%(sum-MDeduct)))
+            GrossPay.set(str('£%.2f'%(sum)))
+            NetPay.set(str('£%.2f'%(sum-MDeduct)))
             TaxablePay.set(MTax)
             PensionablePay.set(MPension)
             # display()
@@ -215,10 +215,10 @@ class Employee:
             self.txtReciept.insert(END, 'NI Number\t\t\t'+ NINumber.get()+'\n')
             self.txtReciept.insert(END, 'NI Payment\t\t\t'+ NIpayment.get()+'\n')
             self.txtReciept.insert(END, 'Deductuions\t\t\t'+ Deductions.get()+'\n')
-            self.txtReciept.insert(END, 'City Weighting\t\t\t$'+ str('$ %.2f'%(cityWeighting.get()))+'\n')
+            self.txtReciept.insert(END, 'City Weighting\t\t\t'+ str('£ %.2f'%(cityWeighting.get()))+'\n')
 
-            self.txtReciept.insert(END, '\nTax Paid\t\t\t'+ str('$ %.2f'%(basicSalary.get()))+'\n')
-            self.txtReciept.insert(END, 'OverTime\t\t\t$'+ OverTime.get()+'\n')
+            self.txtReciept.insert(END, '\nTax Paid\t\t\t'+ str('£ %.2f'%(basicSalary.get()))+'\n')
+            self.txtReciept.insert(END, 'OverTime\t\t\t£'+ OverTime.get()+'\n')
             self.txtReciept.insert(END, 'NetPay\t\t\t'+ NetPay.get()+'\n')
             self.txtReciept.insert(END, 'GrossPay\t\t\t'+ GrossPay.get()+'\n')
 
@@ -420,7 +420,7 @@ class Employee:
         treeview = ttk.Treeview(TopFrame3, column= treeview_columns, show='headings',height=7)
         treeview.pack()
 
-        #set up the treeview Columns
+        #print the treeview Columns Headings
         for col in treeview_columns:
             treeview.heading(col, text=col)
             treeview.column(col, width=145)
