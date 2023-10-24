@@ -115,7 +115,7 @@ class Employee:
                 if selected_item:
                     item_text = treeview.item(selected_item, "values")[0]
                     df.drop(df[df['Reference'] == item_text].index, inplace=True)
-                    treeview.delete(selected_item)
+                    treeview.delete(selected_item)    
 
 
         def reset():
@@ -160,7 +160,7 @@ class Employee:
             Refernce.set(str(refPay))
 
             NIpay = random.randint(31201, 400573)
-            NINumber.set("NI"+str(NIpay))
+            NINumber.set(NIpay)
 
             idate = datetime.datetime.now()
             TaxPeriod.set(idate.month)
@@ -252,8 +252,22 @@ class Employee:
                 new_df = pd.DataFrame(new_data)
                 df = pd.concat([df, new_df], ignore_index=True)
                 df.to_excel("Emp.xlsx", index = False)
-                tkinter.messagebox.showinfo('Succesfull','Data updated successfully.')           
+                tkinter.messagebox.showinfo('Succesfull','Data updated successfully.')    
+                # Delete all item from treeview
+                for item in treeview.get_children():
+                    treeview.delete(item)
 
+                # Reprint the data from Treeview
+                try:
+                    df = pd.read_excel('Emp.xlsx')
+                    for index, row in df.iterrows():
+                        treeview.insert('','end', values= (row['Reference'], row['Firstname'], row['Surname'], row['Address']
+                                                            , row['Gender'], row['Mobile'], row['NI Number']
+                                                            , row['Student loan'], row['Tax'], row['Pension']
+                                                            , row['Deductions'], row['Net Pay'], row['Gross Pay']
+                                                            ))
+                except Exception as  e:
+                    tkinter.messagebox.showerror('Error',str(e))
             except Exception as  e:
                 tkinter.messagebox.showerror('Error',str(e))           
 
@@ -336,7 +350,7 @@ class Employee:
                                textvariable= Pension)
         self.txtPension.grid(row=1, column=1) 
 
-        self.lblstdLoan = Label(LeftFrame2right, font=('arial',24,'bold'),text = 'student Loan', bd=7, anchor='w')
+        self.lblstdLoan = Label(LeftFrame2right, font=('arial',24,'bold'),text = 'Student Loan', bd=7, anchor='w')
         self.lblstdLoan.grid(row=2, column=0, sticky=W)
         self.txtstdLoan= Entry(LeftFrame2right, font=('arial',24,'bold'), bd=5, width=12, justify='left',
                                textvariable= stdLoan)
@@ -417,7 +431,7 @@ class Employee:
         treeview_columns = ('Reference','Firstname','Surname','Address','Gender','Mobile','NI Number','Student Loan',
                             'Tax','Pension','Deductions','Net Pay','Gross Pay')
         
-        treeview = ttk.Treeview(TopFrame3, column= treeview_columns, show='headings',height=7)
+        treeview = ttk.Treeview(TopFrame3, column= treeview_columns, show='headings',height=7) #Height = no. of rows visible
         treeview.pack()
 
         #print the treeview Columns Headings
